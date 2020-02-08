@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img width="460" height="300" src=imgs/CGAN_output.gif>
+  <img width="400" height="400" src=imgs/CGAN_output.gif>
 </p>
 
 
