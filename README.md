@@ -1,5 +1,5 @@
 # GANs_PyTorch
 
-![CGAN ouput](img/CGAN_output.gif) 
+![CGANouput](img/CGAN_output.gif) 
 
-![CGAN loss](img/CGAN_loss.png) 
+![CGANloss](img/CGAN_loss.png) 
