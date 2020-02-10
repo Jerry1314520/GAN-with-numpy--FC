@@ -1,4 +1,8 @@
-# GANs_PyTorch
+# GANs in PyTorch
+
+https://github.com/longenbach/DS504_GAN_HW_Submission
+
+
 
 ## Overview:
 * [GAN](#GAN)
