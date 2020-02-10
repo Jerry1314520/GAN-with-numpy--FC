@@ -6,7 +6,17 @@
 
 
 
-<a name="CGAN"></a>CGAN
+
+## GAN:
+
+
+
+
+
+
+
+
+## CGAN:
 
 
 
