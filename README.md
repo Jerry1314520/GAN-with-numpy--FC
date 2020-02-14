@@ -53,6 +53,16 @@ def discriminator_forward(self, img):
     return self.D_a2
 ```
 
+### Backpropagate through Discriminator:
+
+
+
+### Backpropagate through Generator:
+
+
+
+
+
 
 ## GAN:
 
