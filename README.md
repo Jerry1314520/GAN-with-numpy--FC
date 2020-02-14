@@ -1,10 +1,10 @@
 # Generative Adversarial Networks in Numpy & PyTorch
-##
+
+A *work in progress* implementing variations of generative adversarial networks to improve my theoretical understanding and to gain exposure with Pytorch software. Open to suggestions and feedback.
+
 ![LeCun](https://www.import.io/wp-content/uploads/2017/06/Import.io_quote-image4-170525.jpg)
 
-## Overview:
-Implemnting varations of generative adversarial networks to improve my theortical understanding and to gain exposure with Pytorch software. Open to suggestions and feedback. Below *work in progress* is the collection so far: 
-
+### Table of Contents: 
 * [GAN-numpy](#GAN-numpy)
 * [GAN](#GAN)
 * [CGAN](#CGAN)
