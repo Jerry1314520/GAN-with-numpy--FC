@@ -58,6 +58,7 @@ self.D_b1 = np.zeros((1, 128)) # 1 x 128
 self.D_W2 = np.random.randn(128, 1) * np.sqrt(2. / 128) # 128 x 1
 self.D_b2 = np.zeros((1, 1)) # 1 x 1
 
+## Discriminator:
 def discriminator_forward(self, img):
     self.D_a1 = self.hidden_layer_forward(img,self.D_W1,self.D_b1,acitvation='relu')
     self.D_a2 = self.hidden_layer_forward(self.D_a1,self.D_W2,self.D_b2,acitvation='sigmoid')
