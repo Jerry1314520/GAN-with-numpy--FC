@@ -24,19 +24,6 @@ self.G_b2 = np.zeros((1, 256)) # 1 x 256
 
 self.G_W3 = np.random.randn(256, self.img_size ** 2) * np.sqrt(2. / 256) # 256 x 784
 self.G_b3 = np.zeros((1, self.img_size ** 2)) # 1 x 784
-
-## Add Forward & Backward Layers:
-def hidden_layer_forward(self,x, W, b, acitvation='relu'):
-    z = np.dot(x,W) + b
-    if acitvation == 'relu':
-        a = self.relu(z)
-    elif acitvation == 'sigmoid':
-        a = self.sigmoid(z)
-    elif acitvation == 'tanh':
-        a = self.tanh(z)
-    else:
-        raise Exception('Non-supported activation function')
-    return a
     
 ## Generator:
 def generator_forward(self, noise):
