@@ -5,7 +5,7 @@
 ## Overview:
 Implemnting varations of generative adversarial networks to improve my theortical understanding and to gain exposure with Pytorch software. Open to suggestions and feedback. Below *work in progress* is the collection so far: 
 
-* [GAN - Numpy](#GAN - Numpy)
+* [GAN-numpy](#GAN-numpy)
 * [GAN](#GAN)
 * [CGAN](#CGAN)
 
