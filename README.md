@@ -3,9 +3,9 @@
 ![LeCun](https://www.import.io/wp-content/uploads/2017/06/Import.io_quote-image4-170525.jpg)
 
 ## Overview:
-A *work in progress* implemnting GAN varations to improve my theortical understanding and technical understanding of Pytorch software. Open to suggestions and feedback.
+A *work in progress* implemnting varations of generative adversarial networks to improve my theortical understanding and to gain exposure with Pytorch software. Open to suggestions and feedback.
 
-
+* [GAN - Numpy](#GAN - Numpy)
 * [GAN](#GAN)
 * [CGAN](#CGAN)
 
