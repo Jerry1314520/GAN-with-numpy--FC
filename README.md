@@ -54,12 +54,12 @@ def discriminator_forward(self, img):
 ```
 
 ### Discriminator Backward Pass:
-
+![art_Db](imgs/GAN_numpy_Dback.jpeg)
 
 
 
 ### Generator Backward Pass:
-
+![art_Gb](imgs/GAN_numpy_Gback.jpeg)
 
 
 
