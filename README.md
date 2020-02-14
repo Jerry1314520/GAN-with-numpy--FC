@@ -11,9 +11,11 @@ A *work in progress* implementing variations of generative adversarial networks 
 
 ## GAN-numpy
 
-### Architecture:
-![artch](imgs/GAN_numpy_G.jpeg)
+### Generator Architecture:
+![art_G](imgs/GAN_numpy_G.jpeg)
 
+### Discriminator Architecture:
+![art_D](imgs/GAN_numpy_D.jpeg)
 
 
 
