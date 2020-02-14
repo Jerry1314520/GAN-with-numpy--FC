@@ -4,16 +4,13 @@ A *work in progress* implementing variations of generative adversarial networks 
 
 ![LeCun](https://www.import.io/wp-content/uploads/2017/06/Import.io_quote-image4-170525.jpg)
 
-### Table of Contents: 
+## Table of Contents: 
 * [GAN-numpy](#GAN-numpy)
 * [GAN](#GAN)
 * [CGAN](#CGAN)
 
-
-
-
-
 ## GAN-numpy
+
 
 
 
