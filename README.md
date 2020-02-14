@@ -11,7 +11,7 @@ A *work in progress* implementing variations of generative adversarial networks 
 
 ## GAN-numpy
 
-### Generator Architecture:
+#### Generator Forward Pass:
 ![art_G](imgs/GAN_numpy_G.jpeg)
 
 ```python 
@@ -34,7 +34,7 @@ def generator_forward(self, noise):
     return self.G_a3
 ```
 
-### Discriminator Architecture:
+#### Discriminator Forward Pass:
 ![art_D](imgs/GAN_numpy_D.jpeg)
 
 ```python 
@@ -53,7 +53,7 @@ def discriminator_forward(self, img):
     return self.D_a2
 ```
 
-### Discriminator Backward Pass:
+#### Discriminator Backward Pass:
 ![art_Db](imgs/GAN_numpy_Dback.jpeg)
 ```python 
 def discriminator_backward(self, x_real, a_real, x_fake, a_fake):
@@ -108,7 +108,7 @@ def discriminator_backward(self, x_real, a_real, x_fake, a_fake):
     return None
 ```
 
-### Generator Backward Pass:
+#### Generator Backward Pass:
 ![art_Gb](imgs/GAN_numpy_Gback.jpeg)
 ```python 
 def generator_backward(self, noise, a_fake): #x_fake
@@ -157,6 +157,8 @@ def generator_backward(self, noise, a_fake): #x_fake
 
     return None
 ```
+### Results:
+
 
 
 
