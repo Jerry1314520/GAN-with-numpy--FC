@@ -1,6 +1,7 @@
 # GANs in PyTorch
 
-*"Generative Adversarial Networks is the most intresting idea in the last ten years in machine learning. -Yann LeCun, Director, Facebook AI"*
+*"Generative Adversarial Networks is the most intresting idea in the last ten years in machine learning." 
+                                                                      -Yann LeCun, Director, Facebook AI*
 
 
 https://github.com/longenbach/DS504_GAN_HW_Submission
