@@ -25,6 +25,7 @@ self.G_b2 = np.zeros((1, 256)) # 1 x 256
 self.G_W3 = np.random.randn(256, self.img_size ** 2) * np.sqrt(2. / 256) # 256 x 784
 self.G_b3 = np.zeros((1, self.img_size ** 2)) # 1 x 784
 
+## Add Forward & Backward Layers:
 def hidden_layer_forward(self,x, W, b, acitvation='relu'):
     z = np.dot(x,W) + b
     if acitvation == 'relu':
@@ -44,18 +45,25 @@ def generator_forward(self, noise):
     self.G_a3 = self.hidden_layer_forward(self.G_a2,self.G_W3,self.G_b3,acitvation='tanh')
     '''ADD MORE LAYERS'''
     return self.G_a3
-    
-        
-        
-        
 ```
-
 
 ### Discriminator Architecture:
 ![art_D](imgs/GAN_numpy_D.jpeg)
 
+```python 
+## Intial Discrimnator Weights::
+self.D_W1 = np.random.randn(self.img_size ** 2, 128) * np.sqrt(2. / self.img_size ** 2) # 784 x 128
+self.D_b1 = np.zeros((1, 128)) # 1 x 128
 
+self.D_W2 = np.random.randn(128, 1) * np.sqrt(2. / 128) # 128 x 1
+self.D_b2 = np.zeros((1, 1)) # 1 x 1
 
+def discriminator_forward(self, img):
+    self.D_a1 = self.hidden_layer_forward(img,self.D_W1,self.D_b1,acitvation='relu')
+    self.D_a2 = self.hidden_layer_forward(self.D_a1,self.D_W2,self.D_b2,acitvation='sigmoid')
+    '''ADD MORE LAYERS'''
+    return self.D_a2
+```
 
 
 ## GAN:
