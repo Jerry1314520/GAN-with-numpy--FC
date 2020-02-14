@@ -55,12 +55,108 @@ def discriminator_forward(self, img):
 
 ### Discriminator Backward Pass:
 ![art_Db](imgs/GAN_numpy_Dback.jpeg)
+```python 
+def discriminator_backward(self, x_real, a_real, x_fake, a_fake):
+    '''Discriminator Real Loss: '''
+    dL_da2 = self.dDLoss(a_real, y="real", eps=1e-9) # 64x1
+    da2_dz2 = self.hidden_layer_backward(a_real, acitvation='sigmoid') # a_real = self.D_a2
+    dz2_dW2 = self.D_a1.T #64 x 128
+    dz2_db2 = np.ones(a_real.shape[0]) #64 x 1
 
+    dL_dW2_real = np.dot(dz2_dW2, (da2_dz2 * dL_da2))
+    dL_db2_real = np.dot(dz2_db2, (da2_dz2 * dL_da2)) 
 
+    dz2_da1 = self.D_W2.T
+    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='relu')
+    dz1_dW1 = x_real.T
+    dz1_db1 = np.ones(a_real.shape[0])
+
+    dL_dW1_real = np.dot(dz1_dW1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
+    dL_db1_real = np.dot(dz1_db1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
+
+    '''Discriminator Fake Loss: '''
+    dL_da2 = self.dDLoss(a_fake, y="fake", eps=1e-9)
+    da2_dz2 = self.hidden_layer_backward(a_fake, acitvation='sigmoid') # a_fake = self.D_a2
+    dz2_dW2 = self.D_a1.T
+    dz2_db2 = np.ones(a_fake.shape[0])
+
+    dL_dW2_fake = np.dot(dz2_dW2, (da2_dz2 * dL_da2))
+    dL_db2_fake = np.dot(dz2_db2, (da2_dz2 * dL_da2)) 
+
+    dz2_da1 = self.D_W2.T
+    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='relu')
+    dz1_dW1 = x_fake.T
+    dz1_db1 = np.ones(a_fake.shape[0])
+
+    dL_dW1_fake = np.dot(dz1_dW1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
+    dL_db1_fake = np.dot(dz1_db1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
+
+    '''Discriminator Combined Loss: '''
+    dL_dW2_total = dL_dW2_real + dL_dW2_fake 
+    dL_db2_total = dL_db2_real + dL_db2_fake
+
+    dL_dW1_total = dL_dW1_real + dL_dW1_fake 
+    dL_db1_total = dL_db1_real + dL_db1_fake
+
+    '''Update Discriminator Weights: '''
+    self.D_W2 -= self.lr * dL_dW2_total
+    self.D_b2 -= self.lr * dL_db2_total
+
+    self.D_W1 -= self.lr * dL_dW1_total
+    self.D_b1 -= self.lr * dL_db1_total
+
+    return None
+```
 
 ### Generator Backward Pass:
 ![art_Gb](imgs/GAN_numpy_Gback.jpeg)
+```python 
+def generator_backward(self, noise, a_fake): #x_fake
+    '''Discriminator Loss: '''
+    dL_da2 = self.dGloss(a_fake, y="fake", eps=1e-9)
+    da2_dz2 = self.hidden_layer_backward(a_fake, acitvation='sigmoid')
+    dz2_da1 = self.D_W2.T
+    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='relu')
+    dz1_dx = self.D_W1.T
 
+    dL_dx = np.dot(np.dot((dL_da2 * da2_dz2), dz2_da1) * da1_dz1, dz1_dx)
+
+    '''Generator Loss: '''
+    da3_dz3 = self.hidden_layer_backward(self.G_a3, acitvation='tanh')
+    dz3_dW3 = self.G_a2.T
+    dz3_db3 = np.ones(a_fake.shape[0])
+
+    dL_dW3 = np.dot(dz3_dW3, (da3_dz3 * dL_dx))
+    dL_db3 = np.dot(dz3_db3, (da3_dz3 * dL_dx))
+
+    dz3_da2 = self.G_W3.T
+    da2_dz2 = self.hidden_layer_backward(self.G_a2, acitvation='relu')
+    dz2_dW2 = self.G_a1.T
+    dz2_db2 = np.ones(a_fake.shape[0])
+
+    dL_dW2 = np.dot(dz2_dW2, np.dot( (dL_dx * da3_dz3), dz3_da2) * da2_dz2 )
+    dL_db2 = np.dot(dz2_db2, np.dot( (dL_dx * da3_dz3), dz3_da2) * da2_dz2 )
+
+    dz2_da1 = self.G_W2.T
+    da1_dz1 = self.hidden_layer_backward(self.G_a1, acitvation='relu')
+    dz1_dW1 = noise.T
+    dz1_db1 = np.ones(a_fake.shape[0])
+
+    dL_dW1 = np.dot(dz1_dW1, np.dot( (np.dot( (dL_dx * da3_dz3), dz3_da2) * da2_dz2 ), dz2_da1) * da1_dz1)
+    dL_db1 = np.dot(dz1_db1, np.dot( (np.dot( (dL_dx * da3_dz3), dz3_da2) * da2_dz2 ), dz2_da1) * da1_dz1)
+
+    '''Update Generator Weights: '''
+    self.G_W1 -= self.lr * dL_dW1
+    self.G_b1 -= self.lr * dL_db1
+
+    self.G_W2 -= self.lr * dL_dW2
+    self.G_b2 -= self.lr * dL_db2
+
+    self.G_W3 -= self.lr * dL_dW3
+    self.G_b3 -= self.lr * dL_db3
+
+    return None
+```
 
 
 
