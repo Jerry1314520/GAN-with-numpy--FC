@@ -1,8 +1,11 @@
-# GANs in PyTorch
+# Generative Adversarial Networks in Numpy & PyTorch
 
+## Objective:
 *"Generative Adversarial Networks is the most intresting idea in the last ten years in machine learning."* 
                                                                       **-Yann LeCun, Director, Facebook AI**
-                               
+
+![LeCun](https://www.import.io/wp-content/uploads/2017/06/Import.io_quote-image4-170525.jpg)
+
 
 
 https://github.com/longenbach/DS504_GAN_HW_Submission
