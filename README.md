@@ -1,5 +1,5 @@
 # Generative Adversarial Networks in Numpy & PyTorch
-
+##
 ![LeCun](https://www.import.io/wp-content/uploads/2017/06/Import.io_quote-image4-170525.jpg)
 
 ## Overview:
@@ -13,7 +13,7 @@ Implemnting varations of generative adversarial networks to improve my theortica
 
 
 
-## GAN - Numpy
+## GAN-numpy
 
 
 
