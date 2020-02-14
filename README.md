@@ -14,6 +14,43 @@ A *work in progress* implementing variations of generative adversarial networks 
 ### Generator Architecture:
 ![art_G](imgs/GAN_numpy_G.jpeg)
 
+```python 
+## Intial Generator Weights:
+self.G_W1 = np.random.randn(self.noise_dim, 128) * np.sqrt(2. / self.noise_dim) # 100 x 128
+self.G_b1 = np.zeros((1, 128)) # 1 x 128
+
+self.G_W2 = np.random.randn(128, 256) * np.sqrt(2. / 128) # 128 x 256
+self.G_b2 = np.zeros((1, 256)) # 1 x 256
+
+self.G_W3 = np.random.randn(256, self.img_size ** 2) * np.sqrt(2. / 256) # 256 x 784
+self.G_b3 = np.zeros((1, self.img_size ** 2)) # 1 x 784
+
+def hidden_layer_forward(self,x, W, b, acitvation='relu'):
+    z = np.dot(x,W) + b
+    if acitvation == 'relu':
+        a = self.relu(z)
+    elif acitvation == 'sigmoid':
+        a = self.sigmoid(z)
+    elif acitvation == 'tanh':
+        a = self.tanh(z)
+    else:
+        raise Exception('Non-supported activation function')
+    return a
+    
+## Generator:
+def generator_forward(self, noise):
+    self.G_a1 = self.hidden_layer_forward(noise,self.G_W1,self.G_b1,acitvation='relu')
+    self.G_a2 = self.hidden_layer_forward(self.G_a1,self.G_W2,self.G_b2,acitvation='relu')
+    self.G_a3 = self.hidden_layer_forward(self.G_a2,self.G_W3,self.G_b3,acitvation='tanh')
+    '''ADD MORE LAYERS'''
+    return self.G_a3
+    
+        
+        
+        
+```
+
+
 ### Discriminator Architecture:
 ![art_D](imgs/GAN_numpy_D.jpeg)
 
