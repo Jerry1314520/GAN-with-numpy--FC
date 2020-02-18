@@ -117,11 +117,11 @@ def discriminator_backward(self, x_real, a_real, x_fake, a_fake, batch_size):
     dL_db1_total = dL_db1_real + dL_db1_fake
 
     '''Update Discriminator Weights: '''
-    self.D_W1 -= self.lr * (dL_dW1_total / batch_size )
-    self.D_b1 -= self.lr * (dL_db1_total / batch_size )
+    self.D_W1 -= self.lr * dL_dW1_total 
+    self.D_b1 -= self.lr * dL_db1_total 
 
-    self.D_W2 -= self.lr * (dL_dW2_total / batch_size )
-    self.D_b2 -= self.lr * (dL_db2_total / batch_size )
+    self.D_W2 -= self.lr * dL_dW2_total 
+    self.D_b2 -= self.lr * dL_db2_total 
     return None
 ```
 
@@ -165,14 +165,14 @@ def generator_backward(self, noise, a_fake,batch_size):
     dL_db1 = np.dot(dz1_db1, da1_dz1 * np.dot( (da2_dz2 * np.dot( (da3_dz3 * dL_dx), dz3_da2)), dz2_da1))
 
     '''Update Generator Weights: '''
-    self.G_W1 -= self.lr * (dL_dW1 / batch_size)
-    self.G_b1 -= self.lr * (dL_db1 / batch_size)
+    self.G_W1 -= self.lr * dL_dW1 
+    self.G_b1 -= self.lr * dL_db1 
 
-    self.G_W2 -= self.lr * (dL_dW2 / batch_size)
-    self.G_b2 -= self.lr * (dL_db2 / batch_size)
+    self.G_W2 -= self.lr * dL_dW2 
+    self.G_b2 -= self.lr * dL_db2 
 
-    self.G_W3 -= self.lr * (dL_dW3 / batch_size)
-    self.G_b3 -= self.lr * (dL_db3 / batch_size)
+    self.G_W3 -= self.lr * dL_dW3 
+    self.G_b3 -= self.lr * dL_db3 
 
     return None
 ```
