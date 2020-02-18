@@ -15,7 +15,7 @@ A basic GAN constructed using Numpy. Pytorch is only used to load MNIST data for
 
 
 <p align="center">
-  <img width="300" height="300" src=imgs/GANnumpy.gif >
+  <img width="500" height="500" src=imgs/GANnumpy.gif >
 </p>
 
 
