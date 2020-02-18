@@ -12,7 +12,7 @@ A few variations of generative adversarial networks coded in Pytorch & Numpy to 
 ## GAN-numpy
 A basic GAN constructed using Numpy. Pytorch is only used to load MNIST data for training. To output meaningful results select only a individual digit from MNIST. Results are so-so but documentation is provided below as the basic theory applies to all Pytorch GANs to follow.
 
-[**The Code**](https://arxiv.org/pdf/1502.01852.pdf)
+[**Code**](https://arxiv.org/pdf/1502.01852.pdf) \n
 [**Original Paper**](https://arxiv.org/pdf/1502.01852.pdf)
 
 #### Weight Initialization
