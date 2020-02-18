@@ -184,8 +184,17 @@ def generator_backward(self, noise, a_fake,batch_size):
 
 ## GAN:
 
+[**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
 
-[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
+#### Architecture:
+
+#### Loss Function:
+
+#### Optimizer: 
+
+
+
+
 
 
 
