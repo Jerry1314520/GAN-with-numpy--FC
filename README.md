@@ -18,8 +18,8 @@ A simple GAN constructed using Numpy. Pytorch is only used to load MNIST data fo
 <p float="center">
   <img src="imgs/GANnumpy.gif" width="200" />
   <img src="imgs/GANnumpy.gif" width="200" /> 
-  <img src="imgs/GANnumpy.gif" width="200" />
-  <img src="imgs/GANnumpy.gif" width="200" />
+  <img src="imgs/GANnumpy3.gif" width="200" />
+  <img src="imgs/GANnumpy3.gif" width="200" />
 </p>
 
 
