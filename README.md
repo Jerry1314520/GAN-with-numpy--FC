@@ -37,53 +37,56 @@ self.D_W2 = np.random.randn(128, 1) * np.sqrt(2. / 128) # 128 x 1
 self.D_b2 = np.zeros((1, 1)) # 1 x 1
 ```
 
-#### Generator:
+#### Generator Architecture:
 ![art_G](imgs/GAN_numpy_G.jpeg)
 
 ```python 
 ## Generator:
 def generator_forward(self, noise):
-    self.G_a1 = self.hidden_layer_forward(noise,self.G_W1,self.G_b1,acitvation='relu')
-    self.G_a2 = self.hidden_layer_forward(self.G_a1,self.G_W2,self.G_b2,acitvation='relu')
+    self.G_a1 = self.hidden_layer_forward(noise,self.G_W1,self.G_b1,acitvation='lrelu',ns=0)
+    self.G_a2 = self.hidden_layer_forward(self.G_a1,self.G_W2,self.G_b2,acitvation='lrelu',ns=0)
     self.G_a3 = self.hidden_layer_forward(self.G_a2,self.G_W3,self.G_b3,acitvation='tanh')
     '''ADD MORE LAYERS'''
     return self.G_a3
 ```
 
-#### Discriminator Forward Pass:
+#### Discriminator Architecture:
 ![art_D](imgs/GAN_numpy_D.jpeg)
 
 ```python 
+## Discriminator:
 def discriminator_forward(self, img):
-    self.D_a1 = self.hidden_layer_forward(img,self.D_W1,self.D_b1,acitvation='relu')
+    self.D_a1 = self.hidden_layer_forward(img,self.D_W1,self.D_b1,acitvation='lrelu')
     self.D_a2 = self.hidden_layer_forward(self.D_a1,self.D_W2,self.D_b2,acitvation='sigmoid')
     '''ADD MORE LAYERS'''
     return self.D_a2
 ```
 
 #### Discriminator Backward Pass:
+Best to write out the tedious part. Once 
+
 ![art_Db](imgs/GAN_numpy_Dback.jpeg)
 ```python 
-def discriminator_backward(self, x_real, a_real, x_fake, a_fake):
+def discriminator_backward(self, x_real, a_real, x_fake, a_fake, batch_size):
     '''Discriminator Real Loss: '''
-    dL_da2 = self.dDLoss(a_real, y="real", eps=1e-9) # 64x1
+    dL_da2 = self.dDLoss(a_real, y="real", eps=1e-8) # 64x1
     da2_dz2 = self.hidden_layer_backward(a_real, acitvation='sigmoid') # a_real = self.D_a2
-    dz2_dW2 = self.D_a1.T #64 x 128
-    dz2_db2 = np.ones(a_real.shape[0]) #64 x 1
+    dz2_dW2 = self.D_a1.T #64x128
+    dz2_db2 = np.ones(a_real.shape[0]) #64x1
 
     dL_dW2_real = np.dot(dz2_dW2, (da2_dz2 * dL_da2))
     dL_db2_real = np.dot(dz2_db2, (da2_dz2 * dL_da2)) 
 
     dz2_da1 = self.D_W2.T
-    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='relu')
+    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='lrelu')
     dz1_dW1 = x_real.T
     dz1_db1 = np.ones(a_real.shape[0])
 
-    dL_dW1_real = np.dot(dz1_dW1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
-    dL_db1_real = np.dot(dz1_db1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
+    dL_dW1_real = np.dot(dz1_dW1, da1_dz1 * np.dot((da2_dz2 * dL_da2),dz2_da1) ) 
+    dL_db1_real = np.dot(dz1_db1, da1_dz1 * np.dot((da2_dz2 * dL_da2),dz2_da1) ) 
 
     '''Discriminator Fake Loss: '''
-    dL_da2 = self.dDLoss(a_fake, y="fake", eps=1e-9)
+    dL_da2 = self.dDLoss(a_fake, y="fake", eps=1e-8)
     da2_dz2 = self.hidden_layer_backward(a_fake, acitvation='sigmoid') # a_fake = self.D_a2
     dz2_dW2 = self.D_a1.T
     dz2_db2 = np.ones(a_fake.shape[0])
@@ -92,12 +95,12 @@ def discriminator_backward(self, x_real, a_real, x_fake, a_fake):
     dL_db2_fake = np.dot(dz2_db2, (da2_dz2 * dL_da2)) 
 
     dz2_da1 = self.D_W2.T
-    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='relu')
+    da1_dz1 = self.hidden_layer_backward(self.D_a1, acitvation='lrelu')
     dz1_dW1 = x_fake.T
     dz1_db1 = np.ones(a_fake.shape[0])
 
-    dL_dW1_fake = np.dot(dz1_dW1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
-    dL_db1_fake = np.dot(dz1_db1, da1_dz1 * np.dot((dL_da2 * da2_dz2),dz2_da1) ) 
+    dL_dW1_fake = np.dot(dz1_dW1, da1_dz1 * np.dot((da2_dz2 * dL_da2),dz2_da1) ) 
+    dL_db1_fake = np.dot(dz1_db1, da1_dz1 * np.dot((da2_dz2 * dL_da2),dz2_da1) ) 
 
     '''Discriminator Combined Loss: '''
     dL_dW2_total = dL_dW2_real + dL_dW2_fake 
@@ -107,12 +110,11 @@ def discriminator_backward(self, x_real, a_real, x_fake, a_fake):
     dL_db1_total = dL_db1_real + dL_db1_fake
 
     '''Update Discriminator Weights: '''
-    self.D_W2 -= self.lr * dL_dW2_total
-    self.D_b2 -= self.lr * dL_db2_total
+    self.D_W1 -= self.lr * (dL_dW1_total / batch_size )
+    self.D_b1 -= self.lr * (dL_db1_total / batch_size )
 
-    self.D_W1 -= self.lr * dL_dW1_total
-    self.D_b1 -= self.lr * dL_db1_total
-
+    self.D_W2 -= self.lr * (dL_dW2_total / batch_size )
+    self.D_b2 -= self.lr * (dL_db2_total / batch_size )
     return None
 ```
 
