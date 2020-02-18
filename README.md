@@ -119,7 +119,7 @@ def discriminator_backward(self, x_real, a_real, x_fake, a_fake, batch_size):
 ```
 
 #### Generator Backward Pass:
-This is when you really appreciate the Pytorch (```g_loss.backward()``` and ```optimizer_G.step()```). The generator loss (dGLoss) is essentially opposite as the generator tries to maximize the likelihood of discriminator being wrong. Before updating the weights and biases of the generator we first pass the loss of the Fake images (dGLoss) through the fixed discriminator (dL_dx). Once (dL_dx) is calculated again — working from the last layer towards the first layer — we compute and update the derivatives of the loss with respect to the weights and biases for the generator. 
+This is when you really appreciate the Pytorch (```g_loss.backward()``` and ```optimizer_G.step()```). The generator loss (dGLoss) is essentially opposite as the generator tries to maximize the likelihood of discriminator being wrong. Before updating the weights and biases of the generator we first pass the loss of the Fake images (dGLoss) through the fixed discriminator (dL_dx). Once (dL_dx) is calculated — working from the last layer towards the first layer — we compute and update the derivatives of the loss with respect to the weights and biases for the generator. 
 ![art_Gb](imgs/GAN_numpy_Gback.jpeg)
 ```python 
 def generator_backward(self, noise, a_fake,batch_size): 
