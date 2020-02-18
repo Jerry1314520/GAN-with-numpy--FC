@@ -10,11 +10,10 @@ A few variations of generative adversarial networks coded in Pytorch & Numpy to 
 * [CGAN](#CGAN)
 
 ## GAN-numpy
-
-### Summary
 A basic GAN constructed using Numpy. Pytorch is only used to load MNIST data for training. To output meaningful results select only a individual digit from MNIST. Results are so-so but documentation is provided below as the basic theory applies to all Pytorch GANs to follow.
 
-Code
+[**The Code**](https://arxiv.org/pdf/1502.01852.pdf)
+[**Original Paper**](https://arxiv.org/pdf/1502.01852.pdf)
 
 #### Weight Initialization
 Due to the Relu activations in the hidden layers that follow the inputs of the generator and discriminator, the [Kaiming He initialization](https://arxiv.org/pdf/1502.01852.pdf) is used. This initializes weights to have variance equal to 2 / # of input nodes.
@@ -65,6 +64,7 @@ def discriminator_forward(self, img):
 
 #### Discriminator Backward Pass:
 Best to write out the tedious part. We assume Real images have labels=1 and Fake images=0 when calculating the derivative of the standard cross entropy loss (dDLoss). For the both Real and Fake images — working from the last layer towards the first layer — we compute and store the derivatives of the loss with respect to the weights and biases. The Real and Fake losses are combined and then used to update the weights and biases of the discriminator. 
+
 ![art_Db](imgs/GAN_numpy_Dback.jpeg)
 ```python 
 def discriminator_backward(self, x_real, a_real, x_fake, a_fake, batch_size):
@@ -120,6 +120,7 @@ def discriminator_backward(self, x_real, a_real, x_fake, a_fake, batch_size):
 
 #### Generator Backward Pass:
 This is when you really appreciate the Pytorch (```g_loss.backward()``` and ```optimizer_G.step()```). The generator loss (dGLoss) is essentially opposite as the generator tries to maximize the likelihood of discriminator being wrong. Before updating the weights and biases of the generator we first pass the loss of the Fake images (dGLoss) through the fixed discriminator (dL_dx). Once (dL_dx) is calculated — working from the last layer towards the first layer — we compute and update the derivatives of the loss with respect to the weights and biases for the generator. 
+
 ![art_Gb](imgs/GAN_numpy_Gback.jpeg)
 ```python 
 def generator_backward(self, noise, a_fake,batch_size): 
