@@ -18,7 +18,8 @@ A simple GAN constructed using Numpy. Pytorch is only used to load MNIST data fo
   <img src="imgs/GANnumpy2.gif" width="210" />
   <img src="imgs/GANnumpy3.gif" width="210" />
 </p>
-[**Code**](https://arxiv.org/pdf/1502.01852.pdf)
+
+[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN_numpy.py)
 
 #### Weight Initialization
 Due to the Relu activations in the hidden layers that follow the inputs of the generator and discriminator, the [Kaiming He initialization](https://arxiv.org/pdf/1502.01852.pdf) is used. This initializes weights to have variance equal to 2 / # of input nodes.
