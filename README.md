@@ -14,7 +14,29 @@ A few variations of generative adversarial networks coded in Pytorch & Numpy to 
 ### Summary
 A basic GAN constructed using Numpy. Pytorch is only used to load MNIST data for training. To output meaningful results select only a indivdual digit from MNIST. Results are so-so but documentation is provided below as the basic theory applies to all Pytorch GANs to follow.   
 
+Code
 
+#### Weight Initialization
+Due to the Relu activations in the hidden layers that follow the inputs of the generator and discrimnator, the [Kaiming He intialization](https://arxiv.org/pdf/1502.01852.pdf) is used.   
+
+```python 
+## Intial Generator Weights:
+self.G_W1 = np.random.randn(self.noise_dim, 128) * np.sqrt(2. / self.noise_dim) # 100 x 128
+self.G_b1 = np.zeros((1, 128)) # 1 x 128
+
+self.G_W2 = np.random.randn(128, 256) * np.sqrt(2. / 128) # 128 x 256
+self.G_b2 = np.zeros((1, 256)) # 1 x 256
+
+self.G_W3 = np.random.randn(256, self.img_size ** 2) * np.sqrt(2. / 256) # 256 x 784
+self.G_b3 = np.zeros((1, self.img_size ** 2)) # 1 x 784
+
+## Intial Discrimnator Weights::
+self.D_W1 = np.random.randn(self.img_size ** 2, 128) * np.sqrt(2. / self.img_size ** 2) # 784 x 128
+self.D_b1 = np.zeros((1, 128)) # 1 x 128
+
+self.D_W2 = np.random.randn(128, 1) * np.sqrt(2. / 128) # 128 x 1
+self.D_b2 = np.zeros((1, 1)) # 1 x 1
+```
 
 #### Generator Forward Pass:
 
