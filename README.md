@@ -183,6 +183,8 @@ def generator_backward(self, noise, a_fake,batch_size):
 ## GAN:
 
 
+[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
+
 
 
 
@@ -192,7 +194,7 @@ def generator_backward(self, noise, a_fake,batch_size):
 ## CGAN:
 
 
-
+[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/CGAN.py)
 
 
 ```python
