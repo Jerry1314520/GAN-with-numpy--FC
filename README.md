@@ -17,8 +17,7 @@ A basic GAN constructed using Numpy. Pytorch is only used to load MNIST data for
 Code
 
 #### Weight Initialization
-Due to the Relu activations in the hidden layers that follow the inputs of the generator and discrimnator, the [Kaiming He intialization](https://arxiv.org/pdf/1502.01852.pdf) is used.   
-
+Due to the Relu activations in the hidden layers that follow the inputs of the generator and discrimnator, the [Kaiming He intialization](https://arxiv.org/pdf/1502.01852.pdf) is used. This intializes weights to have variance eqaul to 2/input nodes.   
 ```python 
 ## Intial Generator Weights:
 self.G_W1 = np.random.randn(self.noise_dim, 128) * np.sqrt(2. / self.noise_dim) # 100 x 128
@@ -38,22 +37,10 @@ self.D_W2 = np.random.randn(128, 1) * np.sqrt(2. / 128) # 128 x 1
 self.D_b2 = np.zeros((1, 1)) # 1 x 1
 ```
 
-#### Generator Forward Pass:
-
-
+#### Generator:
 ![art_G](imgs/GAN_numpy_G.jpeg)
 
 ```python 
-## Intial Generator Weights:
-self.G_W1 = np.random.randn(self.noise_dim, 128) * np.sqrt(2. / self.noise_dim) # 100 x 128
-self.G_b1 = np.zeros((1, 128)) # 1 x 128
-
-self.G_W2 = np.random.randn(128, 256) * np.sqrt(2. / 128) # 128 x 256
-self.G_b2 = np.zeros((1, 256)) # 1 x 256
-
-self.G_W3 = np.random.randn(256, self.img_size ** 2) * np.sqrt(2. / 256) # 256 x 784
-self.G_b3 = np.zeros((1, self.img_size ** 2)) # 1 x 784
-    
 ## Generator:
 def generator_forward(self, noise):
     self.G_a1 = self.hidden_layer_forward(noise,self.G_W1,self.G_b1,acitvation='relu')
@@ -67,14 +54,6 @@ def generator_forward(self, noise):
 ![art_D](imgs/GAN_numpy_D.jpeg)
 
 ```python 
-## Intial Discrimnator Weights::
-self.D_W1 = np.random.randn(self.img_size ** 2, 128) * np.sqrt(2. / self.img_size ** 2) # 784 x 128
-self.D_b1 = np.zeros((1, 128)) # 1 x 128
-
-self.D_W2 = np.random.randn(128, 1) * np.sqrt(2. / 128) # 128 x 1
-self.D_b2 = np.zeros((1, 1)) # 1 x 1
-
-## Discriminator:
 def discriminator_forward(self, img):
     self.D_a1 = self.hidden_layer_forward(img,self.D_W1,self.D_b1,acitvation='relu')
     self.D_a2 = self.hidden_layer_forward(self.D_a1,self.D_W2,self.D_b2,acitvation='sigmoid')
