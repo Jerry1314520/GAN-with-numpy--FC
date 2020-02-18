@@ -188,7 +188,7 @@ def generator_backward(self, noise, a_fake,batch_size):
 
 <p float="center">
   <img src="imgs/GAN_3by8.gif"/>
-
+  <img src="imgs/GAN_loss.gif" /> 
 </p>
 
 
@@ -219,7 +219,7 @@ def generator_backward(self, noise, a_fake,batch_size):
   <img width="100" height="100" src=imgs/CGAN_output.gif>
 </p>
 
-<img src="imgs/GAN_loss.gif" /> 
+
 
 
 ![CGANloss](imgs/CGAN_loss.png)
