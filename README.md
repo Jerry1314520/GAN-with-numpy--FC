@@ -1,4 +1,4 @@
-# Generative Adversarial Networks in PyTorch & Numpy:
+# Generative Adversarial Networks in PyTorch & Numpy
 
 A few variations of generative adversarial networks coded in Pytorch & Numpy to improve my theoretical understanding and to gain exposure with Pytorch software. Summary of results and code is provided below for each variant. Open to suggestions and feedback.
 
@@ -10,7 +10,7 @@ A few variations of generative adversarial networks coded in Pytorch & Numpy to 
 * [CGAN](#CGAN)
 
 
-## GAN numpy
+## GAN numpy:
 A simple GAN constructed using Numpy. Pytorch is only used to load MNIST data for training. To output meaningful results select only a individual digit from MNIST. Results are so-so but documentation is provided below as the basic theory applies to all Pytorch GANs to follow. 
 [**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN_numpy.py)
 <p float="center">
@@ -184,8 +184,8 @@ GAN implemented in Pytorch. The architecture of generator and discriminator inco
 [**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
 
 <p float="center">
-  <img src="imgs/GAN_4by10.gif"/>
-  <img src="imgs/GAN_loss.gif" /> 
+  <img src="imgs/GAN_4by10.gif" width="800"/>
+  <img src="imgs/GAN_loss.gif" width="800"/> 
 </p>
 
 
