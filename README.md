@@ -178,17 +178,12 @@ def generator_backward(self, noise, a_fake,batch_size):
 ```
 
 ## GAN:
-GAN implemented in Pytorch. The architecture of generator and discriminator incorporates dropout to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs. 
-
-
-[**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
+GAN implemented in Pytorch. The architecture of generator and discriminator incorporates dropout to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs. [**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
 
 <p float="center">
   <img src="imgs/GAN_4by10.gif" width="800"/>
   <img src="imgs/GAN_loss.gif" width="800"/> 
 </p>
-
-
 
 #### Architecture:
 
