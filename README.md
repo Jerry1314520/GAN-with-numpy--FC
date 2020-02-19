@@ -177,12 +177,9 @@ def generator_backward(self, noise, a_fake,batch_size):
     return None
 ```
 
-
-
-
-
-
 ## GAN:
+GAN implemented in Pytorch. The architecture of generator and discriminator incorporates dropout to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs. 
+
 
 [**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
 
@@ -196,10 +193,18 @@ def generator_backward(self, noise, a_fake,batch_size):
 #### Architecture:
 
 #### Loss Function:
-
+```python 
+adversarial_loss = torch.nn.BCELoss()
+```
 #### Optimizer: 
+```python 
+opt_lr = 0.0002 # adam: learning rate
+opt_b1 = 0.9 # adam: decay of first order momentum of gradient
+opt_b2 = 0.999 # adam: decay of first order momentum of gradient
 
-
+optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt_lr, betas=(opt_b1, opt_b2))
+optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt_lr, betas=(opt_b1, opt_b2))
+```
 
 ## CGAN:
 
