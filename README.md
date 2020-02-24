@@ -178,7 +178,7 @@ def generator_backward(self, noise, a_fake,batch_size):
 ```
 
 ## GAN:
-GAN implemented in Pytorch. The architecture of generator and discriminator incorporates dropout and batch normalization to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs. [**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
+Generative Adversarial Network implemented in Pytorch. The architecture of generator and discriminator incorporates dropout and batch normalization to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs. [**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/GAN.py)
 
 <p float="center">
   <img src="imgs/GAN_4by10.gif" width="800"/>
@@ -202,15 +202,16 @@ optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt_lr, betas=(opt
 ```
 
 ## CGAN:
+Conditional Generative Adversarial Network implemented in Pytorch. The architecture of generator and discriminator incorporates dropout and batch normalization to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs.[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/CGAN.py)
 
-
-[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/CGAN.py)
-
-
-<p align="center">
-  <img width="500" height="500" src=imgs/CGAN_output.gif>
+<p float="center">
+  <img src="imgs/CGAN_4by10.gif" width="800"/>
+  <img src="imgs/CGAN_loss.gif" width="800"/> 
 </p>
 
 
-![CGANloss](imgs/CGAN_loss.png)
+
+
+
+
 
