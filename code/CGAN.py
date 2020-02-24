@@ -21,14 +21,14 @@ opt_n_epochs = 100 # number of epochs of training
 opt_batch_size = 128 # size of the batches
 
 opt_lr = 0.0002 # adam: learning rate
-opt_b1 = 0.5 # adam: decay of first order momentum of gradient
+opt_b1 = 0.6 # adam: decay of first order momentum of gradient
 opt_b2 = 0.999 # adam: decay of first order momentum of gradient
 
 opt_latent_dim = 100 # dimensionality of the latent space
 opt_channels = 1 # number of image channels
 opt_img_size = 28  # size of each image dimension
 opt_n_classes = 10 # unique number of labels
-opt_sample_interval = 2000 # interval betwen image samples
+opt_sample_interval = 1000 # interval betwen image samples
 
 img_shape = (opt_channels, opt_img_size, opt_img_size)
 
@@ -95,10 +95,10 @@ class Discriminator(nn.Module):
         return validity
 
 
-# Loss Function:
+## Loss Function:
 adversarial_loss = torch.nn.MSELoss() #torch.nn.BCELoss()
 
-# Initialize Generator and Discriminator:
+## Initialize Generator and Discriminator:
 generator = Generator()
 discriminator = Discriminator()
 
@@ -133,14 +133,21 @@ dataloader = torch.utils.data.DataLoader(
 )
 
 # Save Loss:
-loss_g, loss_d = [], []
-def plot_loss(loss_g,loss_d,window,rolling_true=True):
+loss_g, loss_d, epoch_index = [], [], []
+def plot_loss(loss_g,loss_d,window,rolling_true=True,epoch_index = None):
     if rolling_true == True:
       D_ma = pd.Series(loss_d)
       G_ma = pd.Series(loss_g)
       loss_d_ma = list(D_ma.rolling(window).mean())
       loss_g_ma = list(G_ma.rolling(window).mean())
-    plt.figure(figsize=(10,8))
+    plt.figure(figsize=(18,6))
+    file_name = "CGANloss_.png"
+    if epoch_index != None:
+      file_name = "CGANloss_%d.png" % epoch_index
+      if epoch_index > window:
+        plt.scatter(epoch_index,loss_g_ma[epoch_index],color="#c46700",s=100,zorder=1e2,alpha=0.8)
+      else:
+        plt.scatter(epoch_index,loss_g[epoch_index],color="#c46700",s=100,zorder=1e2,alpha=0.8)
     plt.plot(loss_d, label="Discriminator loss",color="#F8766D",linewidth=1)
     plt.plot(loss_g, label="Generator loss",color="#00BFC4",linewidth=1)
     plt.plot(loss_g_ma,color="#007d80",linewidth=2,linestyle="dashed")
@@ -149,12 +156,36 @@ def plot_loss(loss_g,loss_d,window,rolling_true=True):
     plt.ylabel('Loss')
     plt.legend()
     plt.show()
-    plt.savefig("CGAN_model_loss.png")
+    plt.savefig("cgan_losses/"+file_name,bbox_inches='tight') #
     plt.close()
 
+## Save Images: 
+def save_4by10(epoch,h,w):
+    # plot of generation
+    height,width = 4,opt_n_classes
+    I_generated = np.empty((h*height, w*width))
+    # Sample noise
+    z = Variable(FloatTensor(np.random.normal(0, 1, (height*width, opt_latent_dim))))
+    # Get labels ranging from 0 to n_classes for n rows
+    labels = np.array([num for _ in range(height) for num in range(width)])
+    labels = Variable(LongTensor(labels))
+    gen_images = generator(z, labels)
+    gen_images = gen_images.detach().cpu()
+    c = 0 
+    for i in range(height):
+        for j in range(width):
+            I_generated[i*h:(i+1)*h, j*w:(j+1)*w] = gen_images[c]
+            c+=1
 
+    plt.figure(figsize=(18, 6))
+    plt.axis("off")
+    plt.imshow(I_generated, cmap='gray')
+    t = plt.text(1, 3, epoch, fontsize=10,color='black',fontweight='bold',backgroundcolor='0')
+    t.set_bbox(dict(facecolor='#c46700', alpha=0.8, edgecolor='#c46700'))
+    plt.show()
+    plt.savefig("cgan_imgs/4by10_%d.png" % epoch,bbox_inches='tight') #
+    plt.close   
 
-# Save Images: 
 def sample_image(n_row, batches_done):
     """Saves a grid of generated digits ranging from 0 to n_classes"""
     # Sample noise
@@ -165,27 +196,20 @@ def sample_image(n_row, batches_done):
     gen_imgs = generator(z, labels)
     save_image(gen_imgs.data, "cgan_imgs/%d.png" % batches_done, nrow=n_row, normalize=True)
 
-
-# ----------
-#  Training
-# ----------
-
+#---------------
+## CGAN Training: 
+#---------------
 for epoch in range(opt_n_epochs):
     for i, (imgs, labels) in enumerate(dataloader):
-
-        #batch_size = imgs.shape[0]
-        # Adversarial ground truths
+        # Adversarial ground truths:
         valid = Variable(FloatTensor(imgs.shape[0], 1).fill_(1.0), requires_grad=False)
         fake = Variable(FloatTensor(imgs.shape[0], 1).fill_(0.0), requires_grad=False)
 
-        # Configure input
+        # Configure input:
         real_imgs = Variable(imgs.type(FloatTensor))
         labels = Variable(labels.type(LongTensor))
 
-        # -----------------
-        #  Train Generator
-        # -----------------
-
+        ## Train Generator:
         optimizer_G.zero_grad()
 
         # Sample noise and labels as generator input
@@ -202,10 +226,7 @@ for epoch in range(opt_n_epochs):
         g_loss.backward()
         optimizer_G.step()
 
-        # ---------------------
-        #  Train Discriminator
-        # ---------------------
-
+        ## Train Discriminator:
         optimizer_D.zero_grad()
 
         # Loss for real images
@@ -229,12 +250,35 @@ for epoch in range(opt_n_epochs):
 
         loss_g.append(g_loss.item())      
         loss_d.append(d_loss.item())
-
+        
         batches_done = epoch * len(dataloader) + i
         if batches_done % opt_sample_interval == 0:
-            sample_image(n_row=10, batches_done=batches_done)
+            save_4by10(batches_done,opt_img_size,opt_img_size)
+            epoch_index.append(batches_done)
 
-plot_loss(loss_g,loss_d,100)
+## Loss Plots:             
+for e in epoch_index:
+  plot_loss(loss_g,loss_d,window = 100,epoch_index=e)
 
+## Save GIFs:
+import imageio
+
+# 4by10 GIF:
+os.chdir("/home/shlongenbach/cgan_imgs/")
+images = []
+for filename in ["4by10_"+str(d)+".png" for d in epoch_index]:
+    images.append(imageio.imread(filename))
+os.chdir("/home/shlongenbach/")
+imageio.mimsave("CGAN_4by10.gif", images,duration=0.2)
+
+# Loss GIF:
+os.chdir("/home/shlongenbach/cgan_losses/")
+images = []
+for filename in ["CGANloss_"+str(d)+".png" for d in epoch_index]:
+    images.append(imageio.imread(filename))
+os.chdir("/home/shlongenbach/")
+imageio.mimsave("CGAN_loss.gif", images,duration=0.2)
+
+## Save Model:
 file_name = "CGAN_gpu_z100.pth"
 torch.save(generator.state_dict(), file_name)
