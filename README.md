@@ -191,10 +191,10 @@ Generative Adversarial Network implemented in Pytorch. The architecture of gener
 ```python 
 adversarial_loss = torch.nn.BCELoss()
 ```
-#### Optimizer: 
+#### Optimizers: 
 ```python 
 opt_lr = 0.0002 # adam: learning rate
-opt_b1 = 0.9 # adam: decay of first order momentum of gradient
+opt_b1 = 0.6 # adam: decay of first order momentum of gradient
 opt_b2 = 0.999 # adam: decay of first order momentum of gradient
 
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt_lr, betas=(opt_b1, opt_b2))
@@ -202,14 +202,28 @@ optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt_lr, betas=(opt
 ```
 
 ## CGAN:
-Conditional Generative Adversarial Network implemented in Pytorch. The architecture of generator and discriminator incorporates dropout and batch normalization to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs.[**Code**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/CGAN.py)
+Conditional Generative Adversarial Network implemented in Pytorch. The architecture of generator and discriminator incorporates dropout and batch normalization to improve performance. Layers, dropout-rate, and optimizer parameters were tested over to achieve reasonable outputs.[**[Code]**](https://github.com/longenbach/GANs_PyTorch/blob/master/code/CGAN.py)
 
 <p float="center">
   <img src="imgs/CGAN_4by10.gif" width="800"/>
   <img src="imgs/CGAN_loss.gif" width="800"/> 
 </p>
 
+#### Architecture:
 
+#### Loss Function:
+```python 
+adversarial_loss = torch.nn.MSELoss()
+```
+#### Optimizers: 
+```python 
+opt_lr = 0.0002 # adam: learning rate
+opt_b1 = 0.6 # adam: decay of first order momentum of gradient
+opt_b2 = 0.999 # adam: decay of first order momentum of gradient
+
+optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt_lr, betas=(opt_b1, opt_b2))
+optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt_lr, betas=(opt_b1, opt_b2))
+```
 
 
 
